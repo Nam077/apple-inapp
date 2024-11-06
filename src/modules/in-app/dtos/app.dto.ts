@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { CountryEnum } from 'src/common/countries.enum';
 export class IdAppDto {
     @ApiProperty({
@@ -36,6 +36,7 @@ export class QueryInApp {
         example: CountryEnum.US,
         enum: CountryEnum,
     })
+    @IsOptional()
     @IsEnum(CountryEnum)
     countryCode: CountryEnum;
 }
