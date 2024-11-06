@@ -19,6 +19,6 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document); // Thiết lập đường dẫn cho Swagger UI
 
-    await app.listen(process.env.PORT ?? 3000);
+    await app.listen(process.env.PORT ?? 3004);
 }
 bootstrap();
