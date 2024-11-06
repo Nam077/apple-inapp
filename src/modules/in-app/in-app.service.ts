@@ -58,7 +58,6 @@ export class InAppService {
         const validUrls = this.filterValidUrlsFromArr(urls).map((url) => url.trim());
         const modifiedUrls = validUrls.map((url) => {
             if (queryInApp.countryCode) {
-                // Thay thế mã quốc gia trong URL
                 return url.replace(
                     /https:\/\/apps\.apple\.com\/[a-z]{2}(-[a-z]{2})?\//,
                     `https://apps.apple.com/${queryInApp.countryCode}/`,
@@ -67,7 +66,9 @@ export class InAppService {
             return url;
         });
 
-        const promises = modifiedUrls.map((url) => this.getInAppData(url));
+        const uniqueUrls = [...new Set(modifiedUrls)];
+
+        const promises = uniqueUrls.map((url) => this.getInAppData(url));
 
         const data = await Promise.all(promises);
 
@@ -83,6 +84,6 @@ export class InAppService {
     filterValidUrlsFromArr(text: string[]): string[] {
         const urlRegex = /https:\/\/apps\.apple\.com\/[a-z]{2}(-[a-z]{2})?\/app\/[a-z0-9\-]+\/id[0-9]+/g;
         const matches = text.map((url) => url.match(urlRegex)).filter(Boolean);
-        return matches.flat().map((match) => match.trim());
+        return [...new Set(matches.flat())];
     }
 }
