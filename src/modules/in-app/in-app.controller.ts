@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { InAppResponse, InAppService } from './in-app.service';
 import { GetInAppDataMultipleDto } from './get-in-app-data.dto';
 import { FilterUrlsDto, QueryInApp } from './dtos/app.dto';
@@ -6,6 +6,11 @@ import { FilterUrlsDto, QueryInApp } from './dtos/app.dto';
 @Controller('in-app')
 export class InAppController {
     constructor(private readonly inAppService: InAppService) {}
+
+    @Get('country-codes')
+    getCountryCodes() {
+        return this.inAppService.getCountryCodes();
+    }
 
     @Post('multiple')
     async getInAppDataFromMultipleUrls(
