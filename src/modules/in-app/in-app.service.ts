@@ -10,6 +10,7 @@ interface InAppPurchase {
 
 export interface InAppResponse {
     url: string;
+    name?: string;
     success: boolean;
     data?: InAppPurchase[];
     error?: string;
@@ -26,7 +27,7 @@ export class InAppService {
                 },
             });
             const $ = cheerio.load(response.data);
-
+            const name = $('h1.product-header__title app-header__title').text().trim();
             const inAppPurchases: InAppPurchase[] = [];
             $('div.information-list__item').each((index: any, element: any) => {
                 $(element)
@@ -45,6 +46,7 @@ export class InAppService {
                 url,
                 success: true,
                 data: inAppPurchases,
+                name,
             };
         } catch (error) {
             return {
