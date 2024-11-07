@@ -27,7 +27,7 @@ export class InAppService {
                 },
             });
             const $ = cheerio.load(response.data);
-            const name = $('h1.product-header__title app-header__title').text().trim();
+            const name = $('h1').text().trim();
             const inAppPurchases: InAppPurchase[] = [];
             $('div.information-list__item').each((index: any, element: any) => {
                 $(element)
